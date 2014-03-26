@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <stdio.h>
 
 Mobil makeMobil(Point pos, int w, int h) {
 	Mobil m;
@@ -69,18 +70,28 @@ void drawMobil(Mobil m, Frame f, int color) {
 
 void runMobil(Mobil m, Frame frame, Lintasan l) {
 	int endGame = 0;
+	srand(time(NULL));
 	while(!endGame) {
+		// printf("%d,%d\n", m.position.xFrame, m.position.yFrame);
 		drawMobil(m, frame, GREEN);       
-	    delay(111);
+	    delay(11);
 	    drawMobil(m, frame, BLACK);
-	    m.position.yFrame -= 5;
+	    m.position.yFrame -= 5;	    
 
 	    if (m.position.yFrame < -222) {
 	        m.position.yFrame = 100;
-	        srand(time(NULL));
-	        int randX = (2 * (rand() % 3) + 1) * 35;
-	        m.position.xFrame = l.position.xFrame - l.topWidth/2 + randX;
+	        
+	        int randX = (rand() % 3) * 55;
+	        m.position.xFrame = randX - l.topWidth/4;
 	    }
+
+	    if (m.position.xFrame > 0) {
+	    	m.position.xFrame = ((130-55) * (78 - m.position.yFrame)) / 300 + 55;
+	    } else if (m.position.xFrame < 0) {
+	    	m.position.xFrame = - (((130-55) * (78 - m.position.yFrame)) / 300 + 55);
+	    }
+
+	   
 
 	    if (kbhit()) {
 	        char c = getch();
