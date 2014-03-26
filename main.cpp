@@ -36,18 +36,16 @@ void main() {
                 endGame = 1;
             } else if (c == 'M') { //key kanan
                 drawLintasan(l, frame, BLACK);
-                drawMobil(m, frame, BLACK);
-                p.xFrame -= 10;
-                m.position.xFrame -= 10;
-                l = makeLintasan(p, 200, 500, 300);
+                drawMobil(m, frame, BLACK);             
+                l.position.xFrame -= 10;   
+                m.position.xFrame -= 10;                                
                 drawLintasan(l, frame, RED);
                 drawMobil(m, frame, GREEN);
             } else if (c == 'K') { //key kiri
                 drawLintasan(l, frame, BLACK);
                 drawMobil(m, frame, BLACK);
-                p.xFrame += 10;   
-                m.position.xFrame += 10;        
-                l = makeLintasan(p, 200, 500, 300);
+                l.position.xFrame += 10;                
+                m.position.xFrame += 10;                        
                 drawLintasan(l, frame, RED);
                 drawMobil(m, frame, GREEN);
             } 
