@@ -24,16 +24,17 @@ void main() {
 
     srand(time(NULL));
     int randX = (2 * (rand() % 3) + 1) * 35;
-    Point posMobil = makePoint(l.position.xFrame - l.topWidth/2 + randX, 100);
-    Mobil m = makeMobil(posMobil, 100, 50);
-    
+    Point posMobil = makePoint(l.position.xFrame - l.topWidth/2 + randX, 78);
+    // Mobil m = makeMobil(posMobil, 100, 50);
+    Mobil m = makeMobil(posMobil, l.topWidth / 3, 50);
+
     randX = (2 * (rand() % 3) + 1) * 35;
     posMobil = makePoint(randX, 100);
-    Mobil m2 = makeMobil(posMobil, 100, 50);
+    Mobil m2 = makeMobil(posMobil, l.topWidth / 3, 50);
 
     Point playerPoint = makePoint(0, -222);
-    Mobil playerMobil = makeMobil(playerPoint, 100, 50);
+    Mobil playerMobil = makeMobil(playerPoint, l.topWidth / 3, 50);
     drawMobil(playerMobil, frame, GREEN);
     
-    runMobil(m, frame, l);    
+    runMobil(m, frame, l);
 }

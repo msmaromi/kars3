@@ -7,13 +7,15 @@
 typedef struct
 {
 	Point position;
-	int width;
-	int height;
+	double width;
+	double height;
 } Mobil;
 
 Mobil makeMobil(Point pos, int w, int h);
 void fillMobil(Point p, int fillColor, int boundaryColor, Frame f);
 void drawMobil(Mobil m, Frame f, int color);
 void runMobil(Mobil m, Frame frame, Lintasan l);
+void scaleMobil(Mobil &m, double scaling);
+void autoScaleMobil(Mobil &m, Lintasan &l);
 
 #endif
