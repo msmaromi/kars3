@@ -13,6 +13,6 @@ typedef struct
 } Lintasan;
 
 Lintasan makeLintasan(Point pos, int tw, int bw, int h);
-void drawLintasan(Lintasan l, Frame frame);
+void drawLintasan(Lintasan l, Frame frame, int color);
 
 #endif

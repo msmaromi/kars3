@@ -18,7 +18,7 @@ Line makeLine(Point *p1, Point *p2) {
     return line;
 }
 
-void drawLineDDA(Line *line, Frame *frame) {
+void drawLineDDA(Line *line, Frame *frame, int color) {
     int xa,xb,ya,yb;
 	//--------------
 	xa= line->point1.xFrame;
@@ -41,12 +41,12 @@ void drawLineDDA(Line *line, Frame *frame) {
 
 	
 	Point p = makePoint(x, y);
-	drawPoint(&p, frame);
+	drawPoint(&p, frame, color);
 
 	for(k=0; k<steps;k++){
 		x+=xIncrement;
 		y+=yIncrement;
 		p = makePoint(x, y);
-		drawPoint(&p, frame);
+		drawPoint(&p, frame, color);
 	}
 }

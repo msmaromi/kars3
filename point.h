@@ -17,7 +17,7 @@ typedef struct {
 } Point;
 
 Point makePoint(int x, int y);
-void drawPoint(Point *point, Frame *frame);
+void drawPoint(Point *point, Frame *frame, int color);
 
 
 #endif

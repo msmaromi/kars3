@@ -17,6 +17,6 @@ typedef struct{
 } Line;
 
 Line makeLine(Point *p1, Point *p2);
-void drawLineDDA(Line *line, Frame *frame);
+void drawLineDDA(Line *line, Frame *frame, int color);
 
 #endif

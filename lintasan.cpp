@@ -17,7 +17,7 @@ Lintasan makeLintasan(Point pos, int tw, int bw, int h) {
 p4..............p3
 */
 
-void drawLintasan(Lintasan l, Frame frame) {
+void drawLintasan(Lintasan l, Frame frame, int color) {
 	Point p1 = makePoint(l.position.xFrame - l.topWidth/2, l.position.yFrame + l.height);
 	Point p2 = makePoint(l.position.xFrame + l.topWidth/2, l.position.yFrame + l.height);
 	Point p3 = makePoint(l.position.xFrame + l.bottomWidth/2, l.position.yFrame);
@@ -26,6 +26,6 @@ void drawLintasan(Lintasan l, Frame frame) {
 	Line line1 = makeLine(&p1, &p4);
 	Line line2 = makeLine(&p2, &p3);
 	
-	drawLineDDA(&line1, &frame);
-	drawLineDDA(&line2, &frame);
+	drawLineDDA(&line1, &frame, color);
+	drawLineDDA(&line2, &frame, color);
 }

@@ -17,6 +17,6 @@ Point makePoint(int x, int y) {
     return point;
 }
 
-void drawPoint(Point *point, Frame *frame) {
-    putpixel(getXDos(frame, point->xFrame), getYDos(frame, point->yFrame), RED);
+void drawPoint(Point *point, Frame *frame, int color) {
+    putpixel(getXDos(frame, point->xFrame), getYDos(frame, point->yFrame), color);
 }
