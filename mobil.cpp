@@ -8,8 +8,8 @@
 Mobil makeMobil(Point pos, int w, int h) {
 	Mobil m;
 	m.position = makePoint(pos.xFrame, pos.yFrame);
-	m.width = w;
-	m.height = h;
+	m.width = (double) w;
+	m.height = (double) h;
 
 	return m;
 }
@@ -113,7 +113,29 @@ void runMobil(Mobil m, Frame frame, Lintasan l) {
 	            drawMobil(m, frame, GREEN);
 	        } 
 	    }
+	    
+	    autoScaleMobil(m, l);
 	    drawMobil(m, frame, GREEN);
 	}	
+}
+
+void scaleMobil(Mobil &m, double scaling)
+{
+    m.width = scaling * m.width;
+    m.height = scaling * m.height;
+}
+
+#include <stdio.h>
+
+void autoScaleMobil(Mobil &m, Lintasan &l)
+{
+    int yPos = (m.position.yFrame - 78);
+    if (yPos < 0)
+        yPos *= -1;
+
+    int widthLintasan = l.topWidth + yPos;
+
+    m.width = widthLintasan / 3;
+    m.height = 50 + (yPos/5);
 }
 

@@ -25,17 +25,18 @@ void main() {
     drawLintasan(l, frame, RED);
 
     srand(time(NULL));
+
     int randX = ((rand() % 3) * 55);
     Point posMobil = makePoint(randX - l.topWidth/4, 78);
     Mobil m = makeMobil(posMobil, 100, 50);
     
     randX = (2 * (rand() % 3) + 1) * 35;
     posMobil = makePoint(randX, 100);
-    Mobil m2 = makeMobil(posMobil, 100, 50);
+    Mobil m2 = makeMobil(posMobil, l.topWidth / 3, 50);
 
     Point playerPoint = makePoint(0, -222);
-    Mobil playerMobil = makeMobil(playerPoint, 100, 50);
+    Mobil playerMobil = makeMobil(playerPoint, l.topWidth / 3, 50);
     drawMobil(playerMobil, frame, GREEN);
     
-    runMobil(m, frame, l);    
+    runMobil(m, frame, l);
 }
