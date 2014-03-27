@@ -69,8 +69,7 @@ void drawMobil(Mobil m, Frame f, int color) {
 }
 
 void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
-	int endGame = 0;
-	srand(time(NULL));
+	int endGame = 0;	
 	while(!endGame) {
 		// printf("%d,%d\n", m.position.xFrame, m.position.yFrame);
 		drawLintasan(l, frame, RED);
@@ -78,7 +77,8 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 		drawMobil(p, frame, GREEN);
 	    // delay(1);	    
 	    drawMobil(m, frame, BLACK);
-	    m.position.yFrame -= 5;	    
+	    double deltaMove = 1 + 4 * (300 - m.position.yFrame - l.position.yFrame) / 300;
+	    m.position.yFrame -= deltaMove;
 
 	    if (m.position.yFrame < -222) {
 	        m.position.yFrame = 100;
@@ -88,9 +88,9 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 	    }
 
 	    if (m.position.xFrame - l.position.xFrame > 0) {
-	    	m.position.xFrame = l.position.xFrame + ((100) * (78 - m.position.yFrame)) / 300 + 73.333;
+	    	m.position.xFrame = l.position.xFrame + (100 * (78 - m.position.yFrame)) / 300 + 73.333;
 	    } else if (m.position.xFrame - l.position.xFrame < 0) {
-	    	m.position.xFrame = l.position.xFrame - (((100) * (78 - m.position.yFrame)) / 300 + 73.333);
+	    	m.position.xFrame = l.position.xFrame - ((100 * (78 - m.position.yFrame)) / 300 + 73.333);
 	    }	   
 
 	    if (kbhit()) {
@@ -98,15 +98,19 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 	        if (c == 's') {
 	            endGame = 1;
 	        } else if (c == 'M') { //key kanan
-	            drawLintasan(l, frame, BLACK);
-	            drawMobil(m, frame, BLACK);          
-	            l.position.xFrame -= 173;	            
-	            m.position.xFrame -= 173;                                	            
+	        	if (l.position.xFrame > -173) {
+	        		drawLintasan(l, frame, BLACK);
+		            drawMobil(m, frame, BLACK);          
+		            l.position.xFrame -= 44;	            
+		            m.position.xFrame -= 44;
+	        	}	                                            	           
 	        } else if (c == 'K') { //key kiri
-	            drawLintasan(l, frame, BLACK);
-	            drawMobil(m, frame, BLACK);
-	            l.position.xFrame += 173;                
-	            m.position.xFrame += 173;  	            
+	        	if (l.position.xFrame < 173) {
+	        		drawLintasan(l, frame, BLACK);
+		            drawMobil(m, frame, BLACK);
+		            l.position.xFrame += 44;                
+		            m.position.xFrame += 44;
+	        	}	              	           
 	        } 
 	    }
 	    
