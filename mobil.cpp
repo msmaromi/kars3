@@ -9,9 +9,52 @@ Mobil makeMobil(Point pos, int w, int h) {
 	Mobil m;
 	m.position = makePoint(pos.xFrame, pos.yFrame);
 	m.width = (double) w;
-	m.height = (double) h;
+	m.height = (double) h;	
+	m.sizeBoundary = 0;
 
 	return m;
+}
+
+void resetBoundary(Mobil &m) {
+	m.sizeBoundary = 0;
+}
+
+void setBoundary(Mobil &m, Line &line) {	
+	int xa,xb,ya,yb;
+	//--------------
+	xa= line.point1.xFrame;
+	xb= line.point2.xFrame;
+	ya= line.point1.yFrame;
+	yb= line.point2.yFrame;
+	//--------------
+	int dx=xb-xa;
+	int dy=yb-ya;
+	int steps;
+	int k;
+	float xIncrement, yIncrement;
+	float x=xa;
+	float y=ya;
+
+	if(abs(dx) > abs(dy)) steps = abs(dx);
+	else steps = abs(dy);
+	xIncrement = dx/(float) steps;
+	yIncrement = dy/(float) steps;
+
+	
+	Point p = makePoint(x, y);
+	m.boundary[m.sizeBoundary].xFrame = p.xFrame;	
+	m.boundary[m.sizeBoundary].yFrame = p.yFrame;		
+	m.sizeBoundary++;
+
+	for(k=0; k<steps;k++){
+		x+=xIncrement;
+		y+=yIncrement;
+		p = makePoint(x, y);
+		m.boundary[m.sizeBoundary].xFrame = p.xFrame;
+		m.boundary[m.sizeBoundary].yFrame = p.yFrame;		
+		m.sizeBoundary++;
+	}	
+
 }
 
 void fillMobil(Point P1, int fillColor, int boundaryColor, Frame f) {
@@ -49,7 +92,7 @@ void fillMobil(Point P1, int fillColor, int boundaryColor, Frame f) {
 p4..............p3
 */
 
-void drawMobil(Mobil m, Frame f, int color) {
+void drawMobil(Mobil &m, Frame f, int color) {
 	Point p1 = makePoint(m.position.xFrame - m.width/4, m.position.yFrame + m.height);
 	Point p2 = makePoint(m.position.xFrame + m.width/4, m.position.yFrame + m.height);
 	Point p3 = makePoint(m.position.xFrame + m.width/2, m.position.yFrame);
@@ -66,11 +109,18 @@ void drawMobil(Mobil m, Frame f, int color) {
 	drawLineDDA(&l4, &f, color);
 
 	// fillMobil(m.position, color, color, f);
+
+	resetBoundary(m);
+	setBoundary(m, l1);
+	setBoundary(m, l2);
+	setBoundary(m, l3);
+	setBoundary(m, l4);
 }
 
 void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
-	int endGame = 0;	
-	while(!endGame) {
+	int stop = 0;
+	srand(time(NULL));	
+	while(!stop) {		
 		// printf("%d,%d\n", m.position.xFrame, m.position.yFrame);
 		drawLintasan(l, frame, RED);
 		drawMobil(m, frame, GREEN);
@@ -91,12 +141,12 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 	    	m.position.xFrame = l.position.xFrame + (100 * (78 - m.position.yFrame)) / 300 + 73.333;
 	    } else if (m.position.xFrame - l.position.xFrame < 0) {
 	    	m.position.xFrame = l.position.xFrame - ((100 * (78 - m.position.yFrame)) / 300 + 73.333);
-	    }	   
+	    }	    
 
 	    if (kbhit()) {
 	        char c = getch();
 	        if (c == 's') {
-	            endGame = 1;
+	            stop = 1;
 	        } else if (c == 'M') { //key kanan
 	        	if (l.position.xFrame > -173) {
 	        		drawLintasan(l, frame, BLACK);
@@ -116,6 +166,13 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 	    
 	    autoScaleMobil(m, l);
 	    drawMobil(m, frame, GREEN);	    
+
+	    if(isCollide(m, p)) {
+	    	stop = 1;
+	    	drawMobil(m, frame, BLACK);
+	    	drawMobil(p, frame, GREEN);
+	    	printf("tabrakan!\n");	    	
+	    }
 	}	
 }
 
@@ -137,3 +194,12 @@ void autoScaleMobil(Mobil &m, Lintasan &l)
     m.height = 50 + (yPos/5);
 }
 
+int isCollide(Mobil &m1, Mobil &m2) {		
+	for(int i = 0; i < m1.sizeBoundary; i++) {
+		for(int j = 0; j < m2.sizeBoundary; j++) {			
+			if(m1.boundary[i].xFrame == m2.boundary[j].xFrame && m1.boundary[i].yFrame == m2.boundary[j].yFrame)
+				return 1;
+		}
+	}
+	return 0;
+}
