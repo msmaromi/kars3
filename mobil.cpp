@@ -57,31 +57,93 @@ void setBoundary(Mobil &m, Line &line) {
 
 }
 
-void fillMobil(Point P1, int fillColor, int boundaryColor, Frame f) {
-	int current;
+void fillMobil(Point P, int fillColor, int boundaryColor, Frame f) {
+	int ListPointX[10000];
+	int ListPointY[10000];
+	int current,counter;
+	int currentW,currentE;
+	Point W;
+	Point E;
+	Point PP;
+	Point temp;
+	counter = 0;
+	
+	for(int i=0;i<1000;i++){
+		ListPointX[i] = -2;
+		ListPointY[i] = -3;
+	}
+	
+	PP.xFrame = P.xFrame;
+	PP.yFrame = P.yFrame;
+	
+	if(ListPointX[counter] == -2){		
+		current = getpixel(P.xFrame, P.yFrame);
+		if(current != boundaryColor && current != fillColor){
+			ListPointX[counter] = PP.xFrame;
+			ListPointY[counter] = PP.yFrame;	
+			while(ListPointX[counter]  > 0){
+				temp.xFrame = ListPointX[counter];
+				temp.yFrame = ListPointY[counter];
+				ListPointX[counter] = -2;
+				ListPointY[counter] = -3;
+				//printf(" %d&%d||%d %d ",ListPointX[counter],ListPointY[counter],temp.xFrame, temp.yFrame);
+				current = getpixel(temp.xFrame, temp.yFrame);
+				if(((current != boundaryColor) && (current != fillColor) && (temp.xFrame!=-1)) || counter ==0){
+					//geser kanan dan kiri
+					W.xFrame = temp.xFrame+1;
+					//printf(" %d", W.xFrame);
+					E.xFrame = temp.xFrame;
+					W.yFrame = temp.yFrame;
+					E.yFrame = temp.yFrame;
+					currentW = getpixel(W.xFrame, W.yFrame);
+					currentE = getpixel(E.xFrame, E.yFrame);					
+					
+					int j=counter;
+				
+					while(currentW != boundaryColor && currentW != fillColor){						
+						drawPoint(&W, &f, fillColor);
+						if(getpixel(W.xFrame, W.yFrame+1) != boundaryColor && getpixel(W.xFrame, W.yFrame+1) != fillColor){
+							PP.xFrame = W.xFrame;
+							PP.yFrame = W.yFrame+1;
+							ListPointX[j+1] = PP.xFrame;
+							ListPointY[j+1] = PP.yFrame;
+							j++;
+						}
+						if(getpixel(W.xFrame, W.yFrame-1) != boundaryColor && getpixel(W.xFrame , W.yFrame-1) != fillColor){
+							PP.xFrame = W.xFrame;
+							PP.yFrame = W.yFrame-1;
+							ListPointX[j+1] =PP.xFrame;
+							ListPointY[j+1]= PP.yFrame;
+							j++;
+						}
+						W.xFrame ++; //geser kanan
+						currentW = getpixel(W.xFrame, W.yFrame);				
+						//getch();
+					}					
 
-	Point Pa,Pb,Pc,Pd;
-	Pa.xFrame = P1.xFrame;
-	Pb.xFrame = P1.xFrame;
-	Pc.xFrame = P1.xFrame;
-	Pd.xFrame = P1.xFrame;
-	Pa.yFrame = P1.yFrame;
-	Pb.yFrame = P1.yFrame;
-	Pc.yFrame = P1.yFrame;
-	Pd.yFrame = P1.yFrame;
-
-	current = getpixel(P1.xFrame,P1.yFrame);
-	if((current != boundaryColor) && (current != fillColor)){
-		delay(1);		
-		drawPoint(&P1, &f, fillColor);
-		Pa.xFrame++;
-		fillMobil(Pa,fillColor, boundaryColor, f);
-		Pb.yFrame++;
-		fillMobil(Pb,fillColor, boundaryColor, f);
-		Pc.xFrame--;
-		fillMobil(Pc,fillColor, boundaryColor, f);
-		Pd.yFrame--;
-		fillMobil(Pd,fillColor, boundaryColor, f);
+					while(currentE != boundaryColor && currentE != fillColor){						
+						drawPoint(&E, &f, fillColor);
+						if(getpixel(E.xFrame, E.yFrame + 1) != boundaryColor && getpixel(E.xFrame, E.yFrame + 1) != fillColor){
+							PP.xFrame = E.xFrame;
+							PP.yFrame = E.yFrame + 1;
+							ListPointX[j+1] = PP.xFrame;
+							ListPointY[j+1] = PP.yFrame;	
+							j++;
+						}
+						if(getpixel(E.xFrame , E.yFrame - 1) != boundaryColor && getpixel(E.xFrame , E.yFrame -1) != fillColor){
+							PP.xFrame = E.xFrame;
+							PP.yFrame = E.yFrame-1;
+							ListPointX[j+1] = PP.xFrame;
+							ListPointY[j+1] = PP.yFrame;
+							j++;
+						}
+						E.xFrame --; //geser kiri
+						currentE = getpixel(E.xFrame, E.yFrame);
+					}
+				}
+				counter ++;
+			}			
+		}
 	}
 }
 
@@ -103,6 +165,9 @@ void drawMobilFromPoints(Mobil &m, Point &p1, Point &p2, Point &p3, Point &p4, F
 	drawLineDDA(&l2, &f, color);
 	drawLineDDA(&l3, &f, color);
 	drawLineDDA(&l4, &f, color);
+
+	Point center = makePoint(m.position.xFrame, m.position.yFrame + m.height/2);
+	fillMobil(center, color, color, f);
 
 	resetBoundary(m);
 
