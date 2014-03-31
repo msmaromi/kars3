@@ -92,12 +92,8 @@ void fillMobil(Point P1, int fillColor, int boundaryColor, Frame f) {
 p4..............p3
 */
 
-void drawMobil(Mobil &m, Frame f, int color) {
-	Point p1 = makePoint(m.position.xFrame - m.width/4, m.position.yFrame + m.height);
-	Point p2 = makePoint(m.position.xFrame + m.width/4, m.position.yFrame + m.height);
-	Point p3 = makePoint(m.position.xFrame + m.width/2, m.position.yFrame);
-	Point p4 = makePoint(m.position.xFrame - m.width/2, m.position.yFrame);
-
+void drawMobilFromPoints(Mobil &m, Point &p1, Point &p2, Point &p3, Point &p4, Frame &f, int color)
+{
 	Line l1 = makeLine(&p1, &p2);
 	Line l2 = makeLine(&p2, &p3);
 	Line l3 = makeLine(&p3, &p4);
@@ -108,13 +104,35 @@ void drawMobil(Mobil &m, Frame f, int color) {
 	drawLineDDA(&l3, &f, color);
 	drawLineDDA(&l4, &f, color);
 
-	// fillMobil(m.position, color, color, f);
-
 	resetBoundary(m);
+
 	setBoundary(m, l1);
 	setBoundary(m, l2);
 	setBoundary(m, l3);
 	setBoundary(m, l4);
+}
+
+void drawMobil(Mobil &m, Frame f, int color) {
+	Point p1 = makePoint(m.position.xFrame - m.width/4, m.position.yFrame + m.height);
+	Point p2 = makePoint(m.position.xFrame + m.width/4, m.position.yFrame + m.height);
+	Point p3 = makePoint(m.position.xFrame + m.width/2, m.position.yFrame);
+	Point p4 = makePoint(m.position.xFrame - m.width/2, m.position.yFrame);
+
+    drawMobilFromPoints(m, p1, p2, p3, p4, f, color);
+	// fillMobil(m.position, color, color, f);
+}
+
+void drawMobilWithRotAngle(Mobil &m, Frame f, int color, double angle)
+{
+    // TODO
+    angle = 0;
+    
+    Point p1;
+    Point p2;
+    Point p3;
+    Point p4;
+    
+    drawMobilFromPoints(m, p1, p2, p3, p4, f, color);
 }
 
 void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
