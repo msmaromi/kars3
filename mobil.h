@@ -16,6 +16,8 @@ typedef struct
 Mobil makeMobil(Point pos, int w, int h);
 void fillMobil(Frame f, Point p, int fillColor, int boundaryColor, int plus);
 void drawMobil(Mobil &m, Frame f, int color);
+void drawMobilFromPoints(Mobil &m, Point &p1, Point &p2, Point &p3, Point &p4, Frame &f, int color);
+void drawMobilWithRotAngle(Mobil &m, Frame f, int color, double angle);
 void runMobil(Mobil listM[], Frame frame, Lintasan l, Mobil p);
 void scaleMobil(Mobil &m, double scaling);
 void autoScaleMobil(Mobil &m, Lintasan &l);
