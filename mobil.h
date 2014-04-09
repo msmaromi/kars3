@@ -14,9 +14,9 @@ typedef struct
 } Mobil;
 
 Mobil makeMobil(Point pos, int w, int h);
-void fillMobil(Point p, int fillColor, int boundaryColor, Frame f);
+void fillMobil(Frame f, Point p, int fillColor, int boundaryColor, int plus);
 void drawMobil(Mobil &m, Frame f, int color);
-void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p);
+void runMobil(Mobil listM[], Frame frame, Lintasan l, Mobil p);
 void scaleMobil(Mobil &m, double scaling);
 void autoScaleMobil(Mobil &m, Lintasan &l);
 int isCollide(Mobil &m1, Mobil &m2);
