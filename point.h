@@ -12,11 +12,11 @@
 #include "frame.h"
 
 typedef struct {
-    int xFrame;  //dihitung terhadap frame
-    int yFrame;  //dihitung terhadap frame
+    long xFrame;  //dihitung terhadap frame
+    long yFrame;  //dihitung terhadap frame
 } Point;
 
-Point makePoint(int x, int y);
+Point makePoint(long x, long y);
 void drawPoint(Point *point, Frame *frame, int color);
 
 

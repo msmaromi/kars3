@@ -17,7 +17,7 @@ void main() {
     initgraph(&graphdriver, &graphmode, "../TC/BGI");
     frame = makeFrame(320, 240);
     // tcc -eBARCA GRAPHICS.LIB FRAME.C MAIN.C
-    int topWidthLintasan = 220;
+    int topWidthLintasan = 22;
     int bottomWidthLintasan = 520;
     int heightLintasan = 300;
     Point p = makePoint(0, -222);    
@@ -25,20 +25,20 @@ void main() {
 
     srand(time(NULL));
 
-    int randX = (rand() % 3) * 73;
-    Point posMobil = makePoint(randX - l.topWidth/4, 78);
-    Mobil m = makeMobil(posMobil, 73, 50);
+    int randX = (rand() % 3) * 7.3;
+    Point posMobil = makePoint(randX - 7.3, 78);
+    Mobil m = makeMobil(posMobil, 7.3, 5);
     
-    randX = (2 * (rand() % 3) + 1) * 73;
-    posMobil = makePoint(randX, 100);
-    Mobil m2 = makeMobil(posMobil, l.topWidth / 4, 78);
+    randX = (rand() % 3 ) * 7.3;
+    posMobil = makePoint(randX - 7.3, 78);
+    Mobil m2 = makeMobil(posMobil, 7.3, 5);
 
     Mobil listM[2];
     listM[0] = m;
     listM[1] = m2;
 
     Point playerPoint = makePoint(0, -222);
-    Mobil playerMobil = makeMobil(playerPoint, 520/3, 110);
+    Mobil playerMobil = makeMobil(playerPoint, 520/3, 55);
     // drawMobil(playerMobil, frame, GREEN);
     // delay(1000);
     // drawMobil(playerMobil, frame, BLACK);

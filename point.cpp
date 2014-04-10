@@ -8,7 +8,7 @@
 
 #include "point.h"
 
-Point makePoint(int x, int y) {
+Point makePoint(long x, long y) {
     Point point;
     
     point.xFrame = x;

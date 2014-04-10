@@ -5,11 +5,11 @@
 #include <conio.h>
 #include <stdio.h>
 
-Mobil makeMobil(Point pos, int w, int h) {
+Mobil makeMobil(Point pos, double w, double h) {
 	Mobil m;
 	m.position = makePoint(pos.xFrame, pos.yFrame);
-	m.width = (double) w;
-	m.height = (double) h;	
+	m.width = w;
+	m.height = h;	
 	m.sizeBoundary = 0;
 
 	return m;
@@ -323,7 +323,7 @@ void drawMobilWithRotAngle(Mobil &m, Frame f, int color, double angle)
     drawMobilFromPoints(m, p1, p2, p3, p4, f, color);
 }
 
-void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
+void runMobil(Mobil listM[], Frame frame, Lintasan l, Mobil p) {
 	int stop = 0;
 	srand(time(NULL));	
 	drawMobil(p, frame, GREEN);	
@@ -335,8 +335,9 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 	    	drawMobil(listM[1], frame, GREEN);	    		    	
 	    }
 
-		if(i > 10) {
-			drawLintasan(l, frame, RED);
+		if(i > 10) {						
+			drawLintasan(l, frame, BROWN);
+			// delay(100);
 			drawMobil(listM[0], frame, BLACK);
 	    	drawMobil(listM[1], frame, BLACK);	
 
@@ -344,33 +345,33 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 		    listM[0].position.yFrame -= deltaMove;
 
 		    if (listM[0].position.yFrame < -222) {
-		        listM[0].position.yFrame = 100;
+		        listM[0].position.yFrame = 78;
 		        
-		        int randX = (rand() % 3) * 73;
-		        listM[0].position.xFrame = randX - l.topWidth/4;
-		    }
+		        int randX = (rand() % 3) * 7.3;
+		        listM[0].position.xFrame = randX - 7.3;
+		    }		    
 
 		    if (listM[0].position.xFrame - l.position.xFrame > 0) {
-		    	listM[0].position.xFrame = l.position.xFrame + (100 * (78 - listM[0].position.yFrame)) / 300 + 73.333;
+		    	listM[0].position.xFrame = l.position.xFrame + ((166 * (78 - listM[0].position.yFrame)) / 300 + 7.3);		    	
 		    } else if (listM[0].position.xFrame - l.position.xFrame < 0) {
-		    	listM[0].position.xFrame = l.position.xFrame - ((100 * (78 - listM[0].position.yFrame)) / 300 + 73.333);
-		    }
+		    	listM[0].position.xFrame = l.position.xFrame - ((166 * (78 - listM[0].position.yFrame)) / 300 + 7.3);		    	
+		    }		    
 
 		    deltaMove = 5 + 4 * (300 - listM[1].position.yFrame - l.position.yFrame) / 300;
 		    listM[1].position.yFrame -= deltaMove;
 
 		    if (listM[1].position.yFrame < -222) {
-		        listM[1].position.yFrame = 100;
+		        listM[1].position.yFrame = 78;
 		        
-		        int randX = (rand() % 3) * 73;
-		        listM[1].position.xFrame = randX - l.topWidth/4;
+		        int randX = (rand() % 3) * 7.3;
+		        listM[1].position.xFrame = randX - 7.3;
 		    }
 
 		    if (listM[1].position.xFrame - l.position.xFrame > 0) {
-		    	listM[1].position.xFrame = l.position.xFrame + (100 * (78 - listM[1].position.yFrame)) / 300 + 73.333;
+		    	listM[1].position.xFrame = l.position.xFrame + ((166 * (78 - listM[1].position.yFrame)) / 300 + 7.3);
 		    } else if (listM[1].position.xFrame - l.position.xFrame < 0) {
-		    	listM[1].position.xFrame = l.position.xFrame - ((100 * (78 - listM[1].position.yFrame)) / 300 + 73.333);
-		    }
+		    	listM[1].position.xFrame = l.position.xFrame - ((166 * (78 - listM[1].position.yFrame)) / 300 + 7.3);
+		    }		    
 
 		    if (kbhit()) {
 		        char c = getch();
@@ -386,7 +387,7 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 			            l.position.xFrame -= 44;	            
 			            listM[0].position.xFrame -= 44;
 			            drawMobil(p, frame, GREEN);
-			            drawLintasan(l, frame, RED);
+			            drawLintasan(l, frame, BROWN);
 		        	}	                                            	           
 		        } else if (c == 'K') { //key kiri
 		        	if (l.position.xFrame < 173) {
@@ -397,7 +398,7 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 			            l.position.xFrame += 44;                
 			            listM[0].position.xFrame += 44;
 			            drawMobil(p, frame, GREEN);
-			            drawLintasan(l, frame, RED);
+			            drawLintasan(l, frame, BROWN);
 		        	}	              	           
 		        } 
 		    }
@@ -410,36 +411,37 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 			if(isCollide(listM[0], p)) {
 		    	stop = 1;
 		    	drawMobil(listM[0], frame, RED);
-		    	drawMobil(p, frame, GREEN);
+		    	drawMobil(p, frame, RED);
 		    	printf("tabrakan!\n");	    	
 		    }		    
 	    	
 	    	if(isCollide(listM[1], p)) {
 		    	stop = 1;
 		    	drawMobil(listM[1], frame, RED);
-		    	drawMobil(p, frame, GREEN);
+		    	drawMobil(p, frame, RED);
 		    	printf("tabrakan!\n");	    	
 		    }
-		} else {
-			drawLintasan(l, frame, RED);							
+		} else {			
+			drawLintasan(l, frame, BROWN);		
+			// delay(1000);
 		    drawMobil(listM[0], frame, BLACK);	  	     
 
 		    double deltaMove = 5 + 4 * (300 - listM[0].position.yFrame - l.position.yFrame) / 300;
 		    listM[0].position.yFrame -= deltaMove;
 
 		    if (listM[0].position.yFrame < -222) {
-		        listM[0].position.yFrame = 100;
+		        listM[0].position.yFrame = 78;
 		        
-		        int randX = (rand() % 3) * 73;
-		        listM[0].position.xFrame = randX - l.topWidth/4;
+		        int randX = (rand() % 3) * 7.3;
+		        listM[0].position.xFrame = randX - 7.3;
 		    }
 
 		    if (listM[0].position.xFrame - l.position.xFrame > 0) {
-		    	listM[0].position.xFrame = l.position.xFrame + (100 * (78 - listM[0].position.yFrame)) / 300 + 73.333;
+		    	listM[0].position.xFrame = l.position.xFrame + ((166 * (78 - listM[0].position.yFrame)) / 300 + 7.3);
 		    } else if (listM[0].position.xFrame - l.position.xFrame < 0) {
-		    	listM[0].position.xFrame = l.position.xFrame - ((100 * (78 - listM[0].position.yFrame)) / 300 + 73.333);
-		    }		    
-
+		    	listM[0].position.xFrame = l.position.xFrame - ((166 * (78 - listM[0].position.yFrame)) / 300 + 7.3);
+		    }		    	   
+		    
 		    if (kbhit()) {
 		        char c = getch();
 		        if (c == 's') {
@@ -452,7 +454,7 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 			            l.position.xFrame -= 44;	            
 			            listM[0].position.xFrame -= 44;
 			            drawMobil(p, frame, GREEN);
-			            drawLintasan(l, frame, RED);
+			            drawLintasan(l, frame, BROWN);
 		        	}	                                            	           
 		        } else if (c == 'K') { //key kiri
 		        	if (l.position.xFrame < 173) {
@@ -461,7 +463,7 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 			            l.position.xFrame += 44;                
 			            listM[0].position.xFrame += 44;
 			            drawMobil(p, frame, GREEN);
-			            drawLintasan(l, frame, RED);
+			            drawLintasan(l, frame, BROWN);
 		        	}	              	           
 		        } 
 		    }
@@ -472,7 +474,7 @@ void runMobil(Mobil m, Frame frame, Lintasan l, Mobil p) {
 		    if(isCollide(listM[0], p)) {
 		    	stop = 1;
 		    	drawMobil(listM[0], frame, RED);
-		    	drawMobil(p, frame, GREEN);
+		    	drawMobil(p, frame, RED);
 		    	printf("tabrakan!\n");	    	
 		    }
 		}			   
@@ -489,14 +491,15 @@ void scaleMobil(Mobil &m, double scaling)
 
 void autoScaleMobil(Mobil &m, Lintasan &l)
 {
-    int yPos = (m.position.yFrame - 78);
+    double yPos = (m.position.yFrame - 78);
     if (yPos < 0)
         yPos *= -1;
 
-    int widthLintasan = l.topWidth + yPos;
+    double widthLintasan = l.topWidth + (498 * yPos) / 300;
 
     m.width = widthLintasan / 3;
-    m.height = 50 + (yPos/5);
+    // printf("%f\n", m.width);
+    m.height = 5 + yPos * 50 / 300;
 }
 
 int isCollide(Mobil &m1, Mobil &m2) {		
